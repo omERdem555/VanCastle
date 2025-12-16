@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Görseller - Van Kalesi</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">Van Kalesi</div>
+      <button id="toggleBtn" class="toggle">☰</button>
+      <nav class="menu">
+        <a href="../index.html">Giriş</a>
+        <a href="tarih.html">Tarihi Arka Plan</a>
+        <a href="urartu.html">Urartu Dönemi ve Çivi Yazıları</a>
+        <a href="arkeoloji.html">Arkeolojik Bulgular</a>
+        <a href="osmanli.html">Osmanlı ve Selçuklu Yapıları</a>
+        <a href="tanitim.html">Tanıtım ve Proje Stratejisi</a>
+        <a href="gorseller.html" class="active">Görseller</a>
+        <a href="sonuc.html">Sonuç</a>
+        <a href="kaynakca.html">Kaynakça</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header>
+        <h1 data-i18n="title.gorseller">Görseller</h1>
+        <div class="lang-switch" id="langSwitch">
+          <button data-lang="tr" class="active">TR</button>
+          <button data-lang="en">ENG</button>
+        </div>
+      </header>
+
+      <section class="gallery-page">
+        <p data-i18n="gorseller.intro">Bu sayfada Van Kalesi ve çevresine ait fotoğraflar bulunmaktadır.</p>
+
+        <div class="gallery" id="gallery">
+          <div class="placeholder" id="placeholder" data-i18n="gorseller.loading">Görseller yükleniyor... Eğer görseller yoksa, lütfen <code>assets/images/gorseller/</code> klasörüne ekleyin (gorsel-01.jpg, gorsel-02.jpg ...).</div>
+        </div>
+
+        <script>
+        (function(){
+          const gallery = document.getElementById('gallery');
+          const placeholder = document.getElementById('placeholder');
+          const folder = '../assets/gorseller/';
+          const max = 10; // sadece gorsel-01 .. gorsel-10
+          let found = 0;
+          function pad(n){return n<10? '0'+n : n}
+
+          function tryLoad(path, idx){
+            return new Promise((resolve)=>{
+              const img = new Image();
+              img.onload = function(){
+                found++;
+                const figure = document.createElement('figure');
+                const imgEl = document.createElement('img');
+                imgEl.src = path;
+                imgEl.alt = 'Görsel '+idx;
+                figure.appendChild(imgEl);
+                const caption = document.createElement('figcaption');
+                caption.textContent = '';
+                figure.appendChild(caption);
+                gallery.appendChild(figure);
+                if(placeholder) placeholder.style.display='none';
+                resolve(true);
+              };
+              img.onerror = function(){ resolve(false); };
+              img.src = path;
+            });
+          }
+
+          (async function(){
+            for(let i=1;i<=max;i++){
+              const path = folder + `gorsel-${pad(i)}.jpg`;
+              await tryLoad(path, i); // sadece .jpg kontrolü
+            }
+            setTimeout(function(){
+              if(found===0 && placeholder){
+                const noneMsg = (window.getTranslation ? window.getTranslation('gorseller.none') : 'Henüz görsel bulunamadı. Görselleri <code>assets/images/gorseller/</code> klasörüne koyup isimlendirme önerisiyle ekleyin (ör. gorsel-01.jpg).');
+                placeholder.innerHTML = noneMsg;
+              }
+            }, 200);
+          })();
+        })();
+        </script>
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
