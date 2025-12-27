@@ -1,0 +1,41 @@
+/* Basic Reset */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;color:#222;background:#f7f7f7}
+.app{display:flex;min-height:100vh}
+/* Sidebar: sticky on desktop, fixed off-canvas on mobile. Make menu scrollable so it stays visible while page scrolls */
+.sidebar{width:260px;background:#1f2937;color:#fff;padding:1rem;transition:width .25s;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.sidebar .brand{font-size:1.25rem;font-weight:700;margin-bottom:.75rem}
+.sidebar .toggle{display:none;background:transparent;border:none;color:#fff;font-size:1.25rem;margin-bottom:1rem}
+/* Let the menu scroll independently if it grows taller than viewport */
+.menu{display:flex;flex-direction:column;gap:.25rem;overflow:auto;padding-bottom:1rem}
+.menu a{color:#cbd5e1;text-decoration:none;padding:.5rem .75rem;border-radius:6px}
+.menu a.active,.menu a:hover{background:#374151;color:#fff}
+.content{flex:1;padding:2rem}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+header h1{font-size:2rem;margin:0}
+.lang-switch{display:flex;gap:.35rem}
+.lang-switch button{background:transparent;border:1px solid #e5e7eb;padding:.25rem .5rem;border-radius:4px;cursor:pointer;color:#1f2937}
+.lang-switch button.active{background:#374151;color:#fff;border-color:#374151}
+.intro{display:grid;grid-template-columns:320px 1fr;gap:1.5rem;align-items:start}
+.hero img{width:100%;height:auto;border-radius:6px;display:block}
+.hero figcaption{font-size:.85rem;color:#555;margin-top:.5rem}
+.text p{margin-bottom:1rem;color:#333;line-height:1.6}
+.text h2{margin-top:1rem;margin-bottom:.5rem}
+
+/* Gallery styles for Görseller page */
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(360px,1fr));gap:1.5rem;margin-top:1rem;align-items:start}
+.gallery figure{background:#fff;padding:.5rem;border-radius:6px;border:1px solid #e5e7eb;display:flex;flex-direction:column;align-items:stretch;justify-content:center;overflow:hidden}
+.gallery img{width:100%;height:640px;display:block;border-radius:4px;object-fit:contain;background:#f8fafc}
+.gallery figcaption{font-size:.95rem;color:#444;margin-top:.5rem;text-align:center}
+.placeholder{color:#666;padding:1rem;background:#fff;border-radius:6px;border:1px dashed #e5e7eb;text-align:center}
+
+@media(max-width:800px){
+  .gallery{grid-template-columns:1fr}
+  .gallery img{height:480px}
+  .sidebar{position:fixed;left:-280px;top:0;height:100vh;z-index:40;width:260px}
+  .sidebar.open{left:0}
+  .sidebar .toggle{display:block}
+  .menu{overflow:auto}
+  .content{padding:1rem;margin-left:0}
+  .intro{grid-template-columns:1fr}
+}
